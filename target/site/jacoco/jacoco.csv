@@ -1,0 +1,8 @@
+GROUP,PACKAGE,CLASS,INSTRUCTION_MISSED,INSTRUCTION_COVERED,BRANCH_MISSED,BRANCH_COVERED,LINE_MISSED,LINE_COVERED,COMPLEXITY_MISSED,COMPLEXITY_COVERED,METHOD_MISSED,METHOD_COVERED
+,com.example.smartphone.exceptions,ResourceNotFoundExceptioon,0,4,0,0,0,2,0,1,0,1
+,com.example.smartphone.exceptions,GlobalExceptionHandler,15,3,0,0,3,1,1,1,1,1
+,com.example.smartphone.service.impl,ProductServiceImpl,0,135,0,0,0,30,0,10,0,10
+,com.example.smartphone,SmartphoneApplication,5,3,0,0,2,1,1,1,1,1
+,com.example.smartphone.entity,Products,8,0,0,0,4,0,2,0,2,0
+,com.example.smartphone.entity,Users,3,0,0,0,1,0,1,0,1,0
+,com.example.smartphone.controller,ProductController,248,3,12,0,76,1,11,1,5,1
