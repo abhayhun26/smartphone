@@ -88,6 +88,33 @@ public class ProductController {
         }
     }
 
+    @GetMapping("/getProductBy/{filter}")
+    @PreAuthorize("hasAnyRole('USER','ADMIN')")
+    public ResponseEntity<List<ProductResponse>> getProductByName(@PathVariable String filter){
+        List<Products> products = service.getProductByfilter(filter);
+        List<ProductResponse> response = new ArrayList<>();
+//        for (Products product : products) {
+//            if(product.getName().equalsIgnoreCase(name)){
+//                response.add(ProductResponse.builder()
+//                        .id(product.getId())
+//                        .name(product.getName())
+//                        .brand(product.getBrand())
+//                        .model(product.getModel())
+//                        .price(product.getPrice())
+//                        .description(product.getDescription())
+//                        .stockQuantity(product.getStockQuantity())
+//                        .active(product.getActive())
+//                        .createdAt(product.getCreatedAt())
+//                        .build());
+//            }
+//        }
+        if(!response.isEmpty()){
+            return ResponseEntity.status(HttpStatus.OK).body(response);
+        }else{
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }
+    }
+
     @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/updateProduct/{id}")
     public ResponseEntity<ProductResponse> updateProduct(@PathVariable Long id,@RequestBody ProductRequest request){

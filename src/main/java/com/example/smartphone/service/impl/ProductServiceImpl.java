@@ -71,4 +71,17 @@ public class ProductServiceImpl implements ProductService {
         return product;
     }
 
+    @Override
+    public List<Products> getProductByfilter(String filter) {
+        // Implementation for fetching products by filter
+        if(filter.equalsIgnoreCase("name")){
+            return productRepo.findByNameContainingIgnoreCase(filter);
+        } else if(filter.equalsIgnoreCase("brand")){
+            return productRepo.findByBrandContainingIgnoreCase(filter);
+        } else if(filter.equalsIgnoreCase("model")){
+            return productRepo.findByModelContainingIgnoreCase(filter);
+        }
+        return List.of();
+    }
+
 }
