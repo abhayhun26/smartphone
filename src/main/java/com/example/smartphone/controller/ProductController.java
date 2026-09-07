@@ -22,9 +22,9 @@ public class ProductController {
 
     @PostMapping("/addProduct")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<ProductResponse> createProduct(@RequestBody ProductRequest request){
+    public ResponseEntity<ProductResponse> createProduct(@RequestBody ProductRequest request) {
         Products product = service.createProduct(request);
-        if(product!=null){
+        if (product != null) {
             ProductResponse response = ProductResponse.builder().id(product.getId())
                     .name(product.getName())
                     .brand(product.getBrand())
@@ -37,16 +37,16 @@ public class ProductController {
                     .build();
 
             return ResponseEntity.status(HttpStatus.CREATED).body(response);
-        }else {
+        } else {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
     }
 
     @GetMapping("/getAllProducts")
     @PreAuthorize("hasAnyRole('USER','ADMIN')")
-    public ResponseEntity<List<ProductResponse>> getAllProducts(){
+    public ResponseEntity<List<ProductResponse>> getAllProducts() {
         List<Products> allProducts = service.getAllProducts();
-        if(!allProducts.isEmpty()){
+        if (!allProducts.isEmpty()) {
             List<ProductResponse> response = new ArrayList<>();
             for (Products product : allProducts) {
                 response.add(ProductResponse.builder().id(product.getId())
@@ -61,16 +61,16 @@ public class ProductController {
                         .build());
             }
             return ResponseEntity.status(HttpStatus.OK).body(response);
-        }else {
+        } else {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
     }
 
     @GetMapping("/getProduct/{id}")
     @PreAuthorize("hasAnyRole('USER','ADMIN')")
-    public ResponseEntity<ProductResponse> getProductById(@PathVariable Long id){
+    public ResponseEntity<ProductResponse> getProductById(@PathVariable Long id) {
         Products product = service.getProductById(id);
-        if(product!=null){
+        if (product != null) {
             ProductResponse response = ProductResponse.builder()
                     .id(product.getId())
                     .name(product.getName())
@@ -83,43 +83,41 @@ public class ProductController {
                     .createdAt(product.getCreatedAt())
                     .build();
             return ResponseEntity.status(HttpStatus.OK).body(response);
-        }else{
+        } else {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
     }
 
     @GetMapping("/getProductBy/{filter}")
     @PreAuthorize("hasAnyRole('USER','ADMIN')")
-    public ResponseEntity<List<ProductResponse>> getProductByName(@PathVariable String filter){
-        List<Products> products = service.getProductByfilter(filter);
+    public ResponseEntity<List<ProductResponse>> getProductByName(@PathVariable String filter) {
+        List<Products> filterProducts = service.getProductByfilter(filter);
         List<ProductResponse> response = new ArrayList<>();
-//        for (Products product : products) {
-//            if(product.getName().equalsIgnoreCase(name)){
-//                response.add(ProductResponse.builder()
-//                        .id(product.getId())
-//                        .name(product.getName())
-//                        .brand(product.getBrand())
-//                        .model(product.getModel())
-//                        .price(product.getPrice())
-//                        .description(product.getDescription())
-//                        .stockQuantity(product.getStockQuantity())
-//                        .active(product.getActive())
-//                        .createdAt(product.getCreatedAt())
-//                        .build());
-//            }
-//        }
-        if(!response.isEmpty()){
+        for (Products product : filterProducts) {
+            response.add(ProductResponse.builder()
+                    .id(product.getId())
+                    .name(product.getName())
+                    .brand(product.getBrand())
+                    .model(product.getModel())
+                    .price(product.getPrice())
+                    .description(product.getDescription())
+                    .stockQuantity(product.getStockQuantity())
+                    .active(product.getActive())
+                    .createdAt(product.getCreatedAt())
+                    .build());
+        }
+        if (!response.isEmpty()) {
             return ResponseEntity.status(HttpStatus.OK).body(response);
-        }else{
+        } else {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
     }
 
     @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/updateProduct/{id}")
-    public ResponseEntity<ProductResponse> updateProduct(@PathVariable Long id,@RequestBody ProductRequest request){
-        Products product = service.updateProduct(id,request);
-        if(product!=null){
+    public ResponseEntity<ProductResponse> updateProduct(@PathVariable Long id, @RequestBody ProductRequest request) {
+        Products product = service.updateProduct(id, request);
+        if (product != null) {
             ProductResponse response = ProductResponse.builder()
                     .id(product.getId())
                     .name(product.getName())
@@ -132,16 +130,16 @@ public class ProductController {
                     .createdAt(product.getCreatedAt())
                     .build();
             return ResponseEntity.status(HttpStatus.OK).body(response);
-        }else{
+        } else {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
     }
 
     @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/removeProduct/{id}")
-    public ResponseEntity<ProductResponse> deleteProduct(@PathVariable Long id){
+    public ResponseEntity<ProductResponse> deleteProduct(@PathVariable Long id) {
         Products product = service.deleteProduct(id);
-        if(product!=null){
+        if (product != null) {
             ProductResponse response = ProductResponse.builder()
                     .id(product.getId())
                     .name(product.getName())
@@ -154,7 +152,7 @@ public class ProductController {
                     .createdAt(product.getCreatedAt())
                     .build();
             return ResponseEntity.status(HttpStatus.OK).body(response);
-        }else{
+        } else {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
     }
