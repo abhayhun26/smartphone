@@ -14,4 +14,6 @@ public interface ProductService {
     public Products deleteProduct(Long id);
 
     List<Products> getProductByfilter(String filter);
+
+    List<Products> sortByProduct(String sortBy);
 }

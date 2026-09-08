@@ -156,4 +156,28 @@ public class ProductController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
     }
+
+    @GetMapping("/sortProducts")
+    public ResponseEntity<List<ProductResponse>> sortByProduct(@RequestParam String sortBy) {
+        List<Products> sortedProducts = service.sortByProduct(sortBy);
+        if (!sortedProducts.isEmpty()) {
+            List<ProductResponse> response = new ArrayList<>();
+            for (Products product : sortedProducts) {
+                response.add(ProductResponse.builder()
+                        .id(product.getId())
+                        .name(product.getName())
+                        .brand(product.getBrand())
+                        .model(product.getModel())
+                        .price(product.getPrice())
+                        .description(product.getDescription())
+                        .stockQuantity(product.getStockQuantity())
+                        .active(product.getActive())
+                        .createdAt(product.getCreatedAt())
+                        .build());
+            }
+            return ResponseEntity.status(HttpStatus.OK).body(response);
+        } else {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }
+    }
 }
